@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/natkr/CLionProjects/asd/insertionSort/InsertionSort.cpp
+iostream
+-
+vector
+-
+InsertionSort.h
+C:/Users/natkr/CLionProjects/asd/insertionSort/InsertionSort.h
+
+C:/Users/natkr/CLionProjects/asd/insertionSort/InsertionSort.h
+
+C:/Users/natkr/CLionProjects/asd/insertionSort/main.cpp
+iostream
+-
+InsertionSort.cpp
+C:/Users/natkr/CLionProjects/asd/insertionSort/InsertionSort.cpp
+
