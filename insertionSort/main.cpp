@@ -16,12 +16,7 @@ int main() {
         }
         sort.array = array;
         sort.sort();
-        for (int i = 0; i < size; i++) {
-            std::cout << sort.array[i] << ", ";
-        }
-        std::cout << std::endl;
-        std::cout << "_____________________________________";
-        std::cout << std::endl;
+        sort.displayArray();
     }
     return 0;
 }
