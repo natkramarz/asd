@@ -4,13 +4,14 @@
 
 void InsertionSort::sort() {
 
-    for (int j = 1; j < array.size(); j++) {
-        int element = array[j];
-        int i = j - 1;
-        while (i >= 0 && array[i] > element) {
-            array[i + 1] = array[i];
-            i--;
+    for (int i = 1; i < array.size(); i++) {
+        int element = array[i];
+        int j = i - 1;
+        while (j >= 0 && array[j] > element) {
+            array[j + 1] = array[j];
+            j--;
         }
-        array[i + 1] = element;
+        array[j + 1] = element;
     }
+
 }
