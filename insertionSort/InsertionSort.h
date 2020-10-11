@@ -5,6 +5,7 @@ class InsertionSort {
 public:
     std::vector<int> array;
     void sort();
+    void displayArray();
 };
 
 #endif //INSERTIONSORT_INSERTIONSORT_H

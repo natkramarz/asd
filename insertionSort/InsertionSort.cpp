@@ -15,3 +15,12 @@ void InsertionSort::sort() {
     }
 
 }
+
+void InsertionSort::displayArray() {
+    for (int i = 0; i < array.size(); i++) {
+        std::cout << array[i] << ", ";
+    }
+    std::cout << std::endl;
+    std::cout << "_____________________________________";
+    std::cout << std::endl;
+}
