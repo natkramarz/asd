@@ -4,7 +4,7 @@
 
 void MergeSort::merge(int low, int mid, int high) {
     int i = low, j = mid + 1;
-    std::vector<int> sortedArray(array.size());
+    std::vector<int> sortedArray(mid - low + 1 + high - (mid + 1) + 1);
     int newIndex = 0;
     while(i <= mid && j <= high){
         if(array[i] <= array[j]){

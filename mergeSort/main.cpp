@@ -18,7 +18,10 @@ int main() {
             array[i] = distribution(generator);
         }
         sort.array = array;
+        std::cout << "_____________Unsorted_____________" << std::endl;
+        sort.displayArray();
         sort.sort(0, array.size() - 1);
+        std::cout << "______________Sorted______________" << std::endl;
         sort.displayArray();
     }
     return 0;
