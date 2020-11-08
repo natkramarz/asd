@@ -4,6 +4,13 @@
 #include <random>
 #include <algorithm>
 
+void displayArray(std::vector<int> array){
+    for(int i = 0; i < array.size(); i++){
+        std::cout << array[i] << ", ";
+    }
+    std::cout << std::endl;
+}
+
 int main() {
     HeapSort heapSort = HeapSort();
     std::default_random_engine sizeGenerator;
@@ -24,5 +31,11 @@ int main() {
             std::cout << "Array is not sorted!" << std::endl;
         }
     }
+    std::vector<int> array{1, 8, 2, 10, 5, 11, 14};
+    Heap heap;
+    heap.buildHeap(array);
+    displayArray(array);
+    heap.insert(array, 12);
+    displayArray(array);
     return 0;
 }

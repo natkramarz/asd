@@ -5,12 +5,15 @@
 int Heap::parent(int i){
     return i / 2;
 }
+
 int Heap::leftChild(int i){
     return 2 * i + 1;
 }
+
 int Heap::rightChild(int i){
     return 2 * i + 2;
 }
+
 void Heap::heapify(int i, std::vector<int> & heap) {
     int left = leftChild(i);
     int right = rightChild(i);
@@ -26,29 +29,22 @@ void Heap::heapify(int i, std::vector<int> & heap) {
         heapify(largest, heap);
     }
 }
+
 void  Heap::buildHeap(std::vector<int> & array) {
     for(int i = array.size() / 2 - 1; i >= 0; i--){
         heapify(i, array);
     }
 }
 
-void Heap::displayHeap(int i, std::vector<int> & array) {
-    if(leftChild(i) < array.size() && rightChild(i) < array.size()){
-        if(array[leftChild(i)] < array[rightChild(i)]){
-            displayHeap(leftChild(i), array);
-            displayHeap(rightChild(i), array);
-        }
-        else{
-            displayHeap(rightChild(i), array);
-            displayHeap(leftChild(i), array);
-        }
+void Heap::insert(std::vector<int> & array, int value){
+    array.push_back(value);
+    int curr = array.size() - 1;
+    int prev = parent(curr);
+    while(prev >= 0 && array[curr] > array[prev]){
+        std::swap(array[curr], array[prev]);
+        curr = prev;
+        prev = parent(curr);
     }
-    else if(rightChild(i) < array.size()){
-        displayHeap(rightChild(i), array);
-    }else if(leftChild(i) < array.size()){
-        displayHeap(leftChild(i), array);
-    }
-    std::cout << array[i] << " ";
 }
 
 std::vector<int> HeapSort::sort(std::vector<int> & array){
