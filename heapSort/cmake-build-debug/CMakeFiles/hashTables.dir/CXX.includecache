@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/natkr/CLionProjects/asd/heapSort/heapSort.cpp
+heapSort.h
+C:/Users/natkr/CLionProjects/asd/heapSort/heapSort.h
+vector
+-
+iostream
+-
+
+C:/Users/natkr/CLionProjects/asd/heapSort/heapSort.h
+vector
+-
+
+C:/Users/natkr/CLionProjects/asd/heapSort/main.cpp
+iostream
+-
+vector
+-
+heapSort.cpp
+C:/Users/natkr/CLionProjects/asd/heapSort/heapSort.cpp
+random
+-
+algorithm
+-
+
