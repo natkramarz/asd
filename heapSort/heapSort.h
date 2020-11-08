@@ -10,6 +10,7 @@ public:
     int leftChild(int i);
     int rightChild(int i);
     void insert(std::vector<int> & array, int value);
+    void extractMax(std::vector<int> & array);
 };
 
 class HeapSort{

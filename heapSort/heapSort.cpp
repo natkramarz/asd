@@ -47,6 +47,12 @@ void Heap::insert(std::vector<int> & array, int value){
     }
 }
 
+void Heap::extractMax(std::vector<int> & array) {
+    std::swap(array[0], array[array.size() - 1]);
+    array.pop_back();
+    heapify(0, array);
+}
+
 std::vector<int> HeapSort::sort(std::vector<int> & array){
     std::vector<int> sortedArray(array.size());
     Heap heap;

@@ -37,5 +37,7 @@ int main() {
     displayArray(array);
     heap.insert(array, 12);
     displayArray(array);
+    heap.extractMax(array);
+    displayArray(array);
     return 0;
 }
