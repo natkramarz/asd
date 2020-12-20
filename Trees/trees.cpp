@@ -1,32 +1,33 @@
 #include "trees.h"
 
 void BST::insertNode(int value) {
+    insertNode(value, root);
+}
+
+void BST::insertNode(int value, Node * node) {
     if(root == NULL){
         root = new Node(value);
         return;
     }
-    Node * tmp = root;
-    while(tmp != NULL){
-        if(tmp->value > value){
-            if(tmp->left != NULL){
-                tmp = tmp->left;
-            }else{
-                tmp->left = new Node(value);
-                break;
-            }
+    if(node->value > value){
+        if(node->left == NULL){
+            node->left = new Node(value);
         }
         else{
-            if(tmp->right != NULL){
-                tmp = tmp->right;
-            }else{
-                tmp->right = new Node(value);
-                break;
-            }
+            insertNode(value, node->left);
+        }
+    }
+    else{
+        if(node->right == NULL){
+            node->right = new Node(value);
+        }
+        else {
+            insertNode(value, node->right);
         }
     }
 }
 
-void BST::removeNode(int value) {
+Node * BST::findNodeAndItsParent(int value, Node * node, Node *& parent) {
     Node * tmp = root;
     Node * tmpParent = NULL;
     while(tmp != NULL && tmp->value != value){
@@ -38,33 +39,39 @@ void BST::removeNode(int value) {
             tmp = tmp->right;
         }
     }
+    parent = tmpParent;
+    return tmp;
+}
+
+void BST::removeNode(int value) {
+    Node * parent = NULL;
+    Node * tmp = NULL;
+    tmp = findNodeAndItsParent(value, root, parent);
     if(tmp == NULL) return;
     if(tmp->left == NULL && tmp->right == NULL){
-        if(tmpParent->left == tmp){
-            tmpParent->left = NULL;
+        if(parent->left == tmp){
+            parent->left = NULL;
         }
         else{
-            tmpParent->right = NULL;
+            parent->right = NULL;
         }
         delete tmp;
         return;
     }
     if(tmp->left == NULL){
-        if(tmpParent->left == tmp){
-            tmpParent->left = tmp->right;
-
+        if(parent->left == tmp){
+            parent->left = tmp->right;
         }else{
-            tmpParent->right = tmp->right;
+            parent->right = tmp->right;
         }
         delete tmp;
         return;
     }
     if(tmp->right == NULL){
-        if(tmpParent->left == tmp){
-            tmpParent->left = tmp->left;
-
+        if(parent->left == tmp){
+            parent->left = tmp->left;
         }else{
-            tmpParent->right = tmp->left;
+            parent->right = tmp->left;
         }
         delete tmp;
         return;
@@ -78,15 +85,18 @@ void BST::removeNode(int value) {
         return;
     }
     Node * predecessor = findAndRemovePreOrderPredecessor(tmp);
-    if(tmp == tmpParent->left){
-        tmpParent->left = predecessor;
+    if(tmp == parent->left){
+        parent->left = predecessor;
     }else{
-        tmpParent->right = predecessor;
+        parent->right = predecessor;
     }
     predecessor->left = tmp->left;
     predecessor->right = tmp->right;
     delete tmp;
+
 }
+
+
 Node * BST::findAndRemovePreOrderPredecessor(Node * node) {
     Node * tmpParent = node;
     Node * tmp = node->left;

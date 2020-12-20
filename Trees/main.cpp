@@ -2,7 +2,6 @@
 #include "trees.cpp"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
     BST tree = BST();
     tree.insertNode(9);
     tree.insertNode(12);
@@ -14,7 +13,7 @@ int main() {
     tree.insertNode(7);
     tree.insertNode(8);
     tree.insertNode(16);
-    tree.removeNode(17);
+    tree.removeNode(9);
     tree.printPreOrder();
     return 0;
 }

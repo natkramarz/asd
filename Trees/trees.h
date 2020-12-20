@@ -13,7 +13,6 @@ public:
     }
 };
 
-
 class BST{
     Node * root;
 public:
@@ -26,8 +25,9 @@ public:
     Node * findAndRemovePreOrderPredecessor(Node * node);
 private:
     void printPreOrder(Node * node);
+    void insertNode(int value, Node * node);
+    Node * findNodeAndItsParent(int value, Node * node, Node *& parent);
 };
-
 
 #endif //TREES_TREES_H
 
