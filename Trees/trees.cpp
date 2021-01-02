@@ -217,3 +217,76 @@ Node * AVL::rightRotation(Node * y) {
     updateHeight(x);
     return x;
 }
+
+void AVL::deleteNode(int value){
+    root = deleteNode(value, root);
+}
+
+Node * AVL::findPredecessor(Node * node){
+    Node * tmp = node->right;
+    if(tmp == NULL) return NULL;
+    Node * tmpParent = node;
+    while(tmp->left != NULL){
+        tmpParent = tmp;
+        tmp = tmp->left;
+    }
+    if(node == tmpParent) node->right = tmp->right;
+    else
+        tmpParent->left = tmp->right;
+    return tmp;
+}
+
+Node * AVL:: deleteNode(int value, Node * node){
+    if(node == NULL){
+        return node;
+    }
+    if(value < node->value){
+        node->left = deleteNode(value, node->left);
+    }
+    else if(value > node->value){
+        node->right = deleteNode(value, node->right);
+    }
+    else{
+        Node * tmp;
+        if(node->left == NULL && node->right == NULL){
+            tmp = NULL;
+        }
+        else if(node->left != NULL && node->right == NULL){
+            tmp = node->left;
+        }
+        else if(node->right != NULL && node->left == NULL){
+            tmp = node->right;
+        }
+        else{
+            tmp = findPredecessor(node);
+            tmp->left = node->left;
+            tmp->right = node->right;
+        }
+        if(root == node) root = NULL;
+        delete node;
+        return tmp;
+    }
+    updateHeight(node);
+    int balance = balanceFactor(node);
+
+    if(balance > 1){
+        if(balanceFactor(node->left) >= 0){
+            return rightRotation(node);
+        }
+        else{
+            node->left = leftRotation(node->left);
+            return rightRotation(node);
+        }
+    }
+    if(balance < -1){
+        if(balanceFactor(node->right) <= 0){
+            return leftRotation(node);
+        }
+        else{
+            node->right = rightRotation(node->right);
+            return leftRotation(node);
+        }
+    }
+
+    return node;
+}

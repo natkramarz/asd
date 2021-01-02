@@ -37,16 +37,17 @@ private:
 
 class AVL: public Tree{
 public:
+    int height(Node * node);
     void updateHeight(Node * node);
     int balanceFactor(Node * node);
     Node * rightRotation(Node * node);
     Node * leftRotation(Node * node);
-    Node * rlRotation(Node * node);
-    Node * lrRotation(Node * node);
     void insertNode(int value);
-    int height(Node * node);
+    void deleteNode(int value);
+    Node * findPredecessor(Node * node);
 private:
     Node * insertNode(int value, Node * node);
+    Node * deleteNode(int value, Node * node);
 };
 
 #endif //TREES_TREES_H

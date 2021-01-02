@@ -29,6 +29,11 @@ int main() {
     avl.insertNode(19);
     avl.insertNode(16);
     avl.insertNode(20);
+    avl.deleteNode(8);
+    avl.deleteNode(7);
+    avl.deleteNode(11);
+    avl.deleteNode(14);
+    avl.deleteNode(17);
     avl.inorder();
     std::cout << std::endl;
     avl.preorder();
