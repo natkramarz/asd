@@ -1,5 +1,32 @@
 #include "trees.h"
 
+void Tree::inorder() {
+    inorder(root);
+}
+
+void Tree::inorder(Node * node) {
+    if(node->left != NULL){
+        inorder(node->left);
+    }
+    std::cout << node->value << " ";
+    if(node->right != NULL){
+        inorder(node->right);
+    }
+}
+
+void Tree::preorder() {
+    preorder(root);
+}
+void Tree::preorder(Node * node){
+    std::cout << node->value << " ";
+    if(node->left != NULL){
+        preorder(node->left);
+    }
+    if(node->right != NULL){
+        preorder(node->right);
+    }
+}
+
 void BST::insertNode(int value) {
     insertNode(value, root);
 }
@@ -112,16 +139,81 @@ Node * BST::findAndRemovePreOrderPredecessor(Node * node) {
     return tmp;
 }
 
-void BST::printPreOrder() {
-    printPreOrder(root);
+int AVL::balanceFactor(Node *node) {
+    if(node == NULL) return 0;
+    return height(node->left) - height(node->right);
 }
 
-void BST::printPreOrder(Node * node) {
-    if(node->left != NULL){
-        printPreOrder(node->left);
+void AVL::insertNode(int value) {
+    root = insertNode(value, root);
+}
+
+int AVL::height(Node *node) {
+    if(node == NULL) return 0;
+    return node->height;
+}
+
+void AVL::updateHeight(Node *node) {
+    node->height = 1 + std::max(height(node->left), height(node->right));
+}
+
+Node * AVL::insertNode(int value, Node * node) {
+    if(node == NULL){
+        Node * newNode = new Node(value);
+        return newNode;
     }
-    std::cout << node->value << " ";
-    if(node->right != NULL){
-        printPreOrder(node->right);
+    if(node->value > value){
+        node->left = insertNode(value, node->left);
     }
+    else if(node->value < value){
+        node->right = insertNode(value, node->right);
+    }
+    else
+        return node;
+
+    updateHeight(node);
+    int balance = balanceFactor(node);
+
+    if(balance > 1){
+        if(value > node->left->value){
+            node->left = leftRotation(node->left);
+            return rightRotation(node);
+        }
+        else if(value < node->left->value){
+            return rightRotation(node);
+        }
+
+    }
+
+    if(balance < -1){
+        if(value > node->right->value){
+            return leftRotation(node);
+        }
+        else if(value < node->right->value){
+            node->right = rightRotation(node->right);
+            return leftRotation(node);
+        }
+    }
+
+    return node;
+}
+
+Node * AVL::leftRotation(Node * x) {
+    Node * y = x->right;
+    Node * t2 = y->left;
+    x->right = t2;
+    y->left = x;
+    updateHeight(x);
+    updateHeight(y);
+    return y;
+}
+
+Node * AVL::rightRotation(Node * y) {
+    Node * x = y->left;
+    Node * t2 = x->right;
+    y->left = t2;
+    x->right = y;
+    updateHeight(y);
+    updateHeight(x);
+    return x;
 }
