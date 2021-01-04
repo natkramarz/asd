@@ -50,5 +50,41 @@ private:
     Node * deleteNode(int value, Node * node);
 };
 
+class RedBlackTree{
+    struct node{
+        int value;
+        int colour; // 0 - black, 1 - red
+        node * left;
+        node * right;
+        node * parent;
+        node(int value, int colour, node * parent, node * left, node * right){
+            this->value = value;
+            this->colour = colour;
+            this->parent = parent;
+            this->left = left;
+            this->right = right;
+        }
+    };
+public:
+    node * root;
+    node * nil;
+    RedBlackTree(){
+        nil = new node(-1, 0, NULL, NULL, NULL);
+        root = nil;
+    };
+    node * leftRotation(node * x);
+    node * rightRotation(node * n);
+    void insertNode(int value);
+    void deleteNode(int value);
+    void insertFixUp(node * n);
+    void inorder();
+    void transplant(node *u, node *v);
+    void deleteFixup(node * x);
+    node * findTreeMinimum(node * n);
+private:
+    node * deleteNode(node * n);
+    node * inorder(node * n);
+};
+
 #endif //TREES_TREES_H
 

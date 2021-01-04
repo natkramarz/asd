@@ -14,7 +14,7 @@ int main() {
     tree.insertNode(8);
     tree.insertNode(16);
     tree.removeNode(9);
-    tree.preorder(); */
+    tree.preorder();
     AVL avl = AVL();
     avl.insertNode(14);
     avl.insertNode(17);
@@ -36,7 +36,25 @@ int main() {
     avl.deleteNode(17);
     avl.inorder();
     std::cout << std::endl;
-    avl.preorder();
+    avl.preorder(); */
+    RedBlackTree Rbtree = RedBlackTree();
+    Rbtree.insertNode(10);
+    Rbtree.insertNode(18);
+    Rbtree.insertNode(7);
+    Rbtree.insertNode(15);
+    Rbtree.insertNode(16);
+    Rbtree.insertNode(30);
+    Rbtree.insertNode(25);
+    Rbtree.insertNode(40);
+    Rbtree.insertNode(60);
+    Rbtree.insertNode(2);
+    Rbtree.insertNode(1);
+    Rbtree.insertNode(70);
+    Rbtree.deleteNode(18);
+    Rbtree.deleteNode(70);
+    Rbtree.deleteNode(10);
+    Rbtree.deleteNode(16);
+    Rbtree.inorder();
 
     return 0;
 }

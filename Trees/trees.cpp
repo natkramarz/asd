@@ -2,6 +2,7 @@
 
 void Tree::inorder() {
     inorder(root);
+    std::cout << std::endl << std::endl;
 }
 
 void Tree::inorder(Node * node) {
@@ -16,7 +17,9 @@ void Tree::inorder(Node * node) {
 
 void Tree::preorder() {
     preorder(root);
+    std::cout << std::endl << std::endl;
 }
+
 void Tree::preorder(Node * node){
     std::cout << node->value << " ";
     if(node->left != NULL){
@@ -289,4 +292,241 @@ Node * AVL:: deleteNode(int value, Node * node){
     }
 
     return node;
+}
+
+RedBlackTree::node * RedBlackTree::leftRotation(node * x) {
+    node * y = x->right;
+    x->right = y->left;
+    if(y->left != nil){
+        y->left->parent = x;
+    }
+    y->parent = x->parent;
+    if(x->parent == nil){
+        root = y;
+    }
+    else if(x == x->parent->left){
+        x->parent->left = y;
+    }
+    else{
+        x->parent->right = y;
+    }
+    y->left = x;
+    x->parent = y;
+    return x;
+}
+
+RedBlackTree::node * RedBlackTree::rightRotation(node * y) {
+    node * x = y->left;
+    y->left = x->right;
+    if(x->right != nil){
+        x->right->parent = y;
+    }
+    x->parent = y->parent;
+    if(y->parent == nil){
+        root = x;
+    }
+    else if(y == y->parent->left){
+        y->parent->left = x;
+    }
+    else{
+        y->parent->right = x;
+    }
+    x->right = y;
+    y->parent = x;
+}
+
+void RedBlackTree::insertNode(int value) {
+    node * y = nil;
+    node * x = root;
+    while(x != nil){
+        y = x;
+        if(value < x->value){
+            x = x->left;
+        }
+        else x = x->right;
+    }
+    node * z = new node(value, 1, y, nil, nil);
+    if(y == nil){
+        root = z;
+    }
+    else if(z->value < y->value){
+        y->left = z;
+    }
+    else y->right = z;
+    insertFixUp(z);
+}
+
+void RedBlackTree::insertFixUp(node *z) {
+    while(z->parent->colour == 1){
+        if(z->parent == z->parent->parent->left){
+            node * y = z->parent->parent->right; // uncle
+            if(y->colour == 1){
+                z->parent->colour = 0;
+                y->colour = 0;
+                z->parent->parent->colour = 1;
+                z = z->parent->parent;
+            }
+            else {
+                if (z == z->parent->right) {
+                    z = z->parent;
+                    leftRotation(z);
+                }
+                z->parent->colour = 0;
+                z->parent->parent->colour = 1;
+                rightRotation(z->parent->parent);
+            }
+        }
+        else{
+            node * y = z->parent->parent->left;
+            if(y->colour == 1){
+                z->parent->colour = 0;
+                y->colour = 0;
+                z->parent->parent->colour = 1;
+                z = z->parent->parent;
+            }
+            else{
+                if(z == z->parent->left){
+                    z = z->parent;
+                    rightRotation(z);
+                }
+                z->parent->colour = 0;
+                z->parent->parent->colour = 1;
+                leftRotation(z->parent->parent);
+            }
+        }
+    }
+    root->colour = 0;
+};
+
+void RedBlackTree::inorder() {
+    inorder(root);
+    std::cout << std::endl << std::endl;
+}
+
+RedBlackTree::node * RedBlackTree::inorder(node *n) {
+        if(n->left != nil){
+            inorder(n->left);
+        }
+        std::cout << n->value << ": colour: " << n->colour << ", ";
+        if(n->right != nil){
+            inorder(n->right);
+        }
+}
+
+void RedBlackTree::deleteNode(int value) {
+    node * tmp = root;
+    while(tmp != nil && tmp->value != value){
+        if(tmp->value < value)
+            tmp = tmp->right;
+        else
+            tmp = tmp->left;
+    }
+    if(tmp == nil) return;
+    deleteNode(tmp);
+
+}
+
+RedBlackTree::node * RedBlackTree::findTreeMinimum(node *n) {
+    if(n == nil) return nil;
+    while(n->left != nil){
+        n = n->left;
+    }
+    return n;
+}
+
+RedBlackTree::node * RedBlackTree::deleteNode(node *z) {
+    node * y = z;
+    node * x;
+    int y_original_colour = y->colour;
+    if(z->left == nil){
+        x = z->right;
+        transplant(z, z->right);
+    }
+    else if(z->right == nil){
+        x = z->left;
+        transplant(z, z->left);
+    }
+    else{
+        y = findTreeMinimum(z->right);
+        y_original_colour = y->colour;
+        x = y->right;
+        if(y->parent == z){
+            x->parent = y;
+        }
+        else{
+            transplant(y, y->right);
+            y->right = z->right;
+            y->right->parent = y;
+        }
+        transplant(z, y);
+        y->left = z->left;
+        y->left->parent = y;
+        y->colour = z->colour;
+    }
+    if(y_original_colour == 0) deleteFixup(x);
+}
+
+void RedBlackTree::deleteFixup(node *x) {
+    while(x != root && x->colour == 0){
+        if(x == x->parent->left){
+            node * w = x->parent->right;
+            if(w->colour == 1){
+                w->colour = 0;
+                x->parent->colour = 1;
+                leftRotation(x->parent);
+                w = x->parent->right;
+            }
+            if(w->left->colour == 0 && w->right->colour == 0){
+                w->colour = 1;
+                x = x->parent;
+            }
+            else{
+                if(w->right->colour == 0){
+                    w->left->colour = 0;
+                    w->colour = 1;
+                    rightRotation(w);
+                    w = x->parent->right;
+                }
+                w->colour = x->parent->colour;
+                x->parent->colour = 0;
+                w->right->colour = 0;
+                leftRotation(x->parent);
+                x = root;
+            }
+        }
+        else{
+            node * w = x->parent->left;
+            if(w->colour = 1){
+                w->colour = 0;
+                x->parent->colour = 1;
+                rightRotation(x->parent);
+                w = x->parent->left;
+            }
+            if(w->right->colour == 0 && w->left->colour == 0){
+                w->colour = 1;
+                x = x->parent;
+            }
+            else{
+                if(w->left->colour == 0){
+                    w->right->colour = 0;
+                    w->colour = 1;
+                    leftRotation(w);
+                    w = x->parent->left;
+                }
+                w->colour = x->parent->colour;
+                x->parent->colour = 0;
+                w->left->colour = 0;
+                rightRotation(x->parent);
+                x = root;
+            }
+        }
+    }
+    x->colour = 0;
+}
+
+void RedBlackTree::transplant(node *u, node *v) {
+    if(u->parent == nil) root = v;
+    else if(u == u->parent->left) u->parent->left = v;
+    else u->parent->right = v;
+    v->parent = u->parent;
 }
