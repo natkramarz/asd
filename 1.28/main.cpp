@@ -1,14 +1,16 @@
 #include <iostream>
+#include <stack>
 
 // S is a subset of set {1, 2, ..., n}
 // an array is not initialized, so there can be garbage values in it
 
 class S{
     int * set;
-    int * from;
-    int * to;
+    int * from; // from, to - helper arrays to check whether an element
+    int * to;  // of set has been initialized
     int n;
     int top;
+    std::stack<int> stack;
 public:
     S(int size){
         n = size;
@@ -18,16 +20,18 @@ public:
         top = 0;
     }
 
-    int select(){
-        top--;
-        int i = to[top];
+    void select(){
+        if(stack.empty()) return;
+        int i = stack.top();
+        stack.pop();
+        set[i] = 0;
         std::cout << i << std::endl;
-        from[i] = 0;
-        to[top] = 0;
     }
 
     bool search(int i){
         if(i < 1 || i > n) return false;
+        if(top > n && set[i] == 1) return true;
+        if(top > n && set[i] == 0) return false;
         if(from[i] < top && to[from[i]] == i){
             return true;
         }
@@ -36,11 +40,15 @@ public:
 
     void insert(int i){
         if(i < 1 || i > n) return;
-        set[i] = 1;
-        from[i] = top;
-        to[top] = i;
-        if(top < n)
+        if(top > n)
+            set[i] = 1;
+        else {
+            set[i] = 1;
+            from[i] = top;
+            to[top] = i;
             top++;
+        }
+        stack.push(i);
     }
 
     ~S(){
@@ -49,7 +57,6 @@ public:
         delete [] to;
     }
 };
-
 
 
 int main() {
