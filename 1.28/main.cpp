@@ -32,7 +32,7 @@ public:
         if(i < 1 || i > n) return false;
         if(top > n && set[i] == 1) return true;
         if(top > n && set[i] == 0) return false;
-        if(from[i] < top && to[from[i]] == i){
+        if(from[i] < top && to[from[i]] == i && set[i] == 1){
             return true;
         }
         return false;
