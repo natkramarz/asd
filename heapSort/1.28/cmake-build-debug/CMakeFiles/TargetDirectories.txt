@@ -1,3 +1,0 @@
-C:/Users/natkr/CLionProjects/asd/heapSort/1.28/cmake-build-debug/CMakeFiles/1_28.dir
-C:/Users/natkr/CLionProjects/asd/heapSort/1.28/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/natkr/CLionProjects/asd/heapSort/1.28/cmake-build-debug/CMakeFiles/rebuild_cache.dir
